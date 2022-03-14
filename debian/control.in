@@ -1,0 +1,12 @@
+Source: pgvector
+Section: database
+Priority: optional
+Maintainer: <mdb@yandex-team.ru>
+Build-Depends: debhelper (>= 10), postgresql-server-dev-all (>= 195~), git
+Standards-Version: 1.1-0
+Homepage: https://bb.yandex-team.ru/projects/MDB/repos/pgvector/browse
+
+Package: postgresql-PGVERSION-pgvector
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, postgresql-PGVERSION
+Description: Extension for PostgreSQL for collecting statistics about messages in logfile
