@@ -1,6 +1,7 @@
 #!/usr/bin/make -f
 
 override_dh_auto_build:
+	+make
 	+pg_buildext build build-%v
 
 override_dh_auto_test:
