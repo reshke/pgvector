@@ -35,3 +35,8 @@ Package: pgvector-15
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, postgresql-15
 Description: Extension to create a logical replication slot in the past.
+
+Package: pgvector-16
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, postgresql-16
+Description: Extension to create a logical replication slot in the past.
