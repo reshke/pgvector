@@ -11,7 +11,7 @@ HEADERS = src/halfvec.h src/sparsevec.h src/vector.h
 
 TESTS = $(wildcard test/sql/*.sql)
 REGRESS = $(patsubst test/sql/%.sql,%,$(TESTS))
-REGRESS_OPTS = --inputdir=test --load-extension=$(EXTENSION)
+REGRESS_OPTS = --inputdir=test --load-extension=$(EXTENSION_BUILD)
 
 # To compile for portability, run: make OPTFLAGS=""
 OPTFLAGS = -march=native
@@ -52,7 +52,7 @@ vector-symlinks:
 	  fi; \
 	done
 
-sql/$(EXTENSION_BUILD)--$(EXTVERSION).sql: vector-symlinks sql/$(EXTENSION_BUILD).sql
+sql/$(EXTENSION_BUILD)--$(EXTVERSION).sql: sql/$(EXTENSION_BUILD).sql | vector-symlinks
 	cp $< $@
 
 sql/vector--$(EXTVERSION).sql: sql/$(EXTENSION_BUILD)--$(EXTVERSION).sql
