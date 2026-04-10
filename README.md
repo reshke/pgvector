@@ -29,6 +29,20 @@ make install # may need sudo
 
 See the [installation notes](#installation-notes---linux-and-mac) if you run into issues
 
+Then load it in databases where you want to use it:
+
+```sql
+CREATE EXTENSION vector;   -- or CREATE EXTENSION pgvector;
+```
+
+Both extension names are supported (`vector` and `pgvector`). For existing clusters that already have `pgvector` installed, you can rename it to `vector` with:
+
+```sql
+UPDATE pg_extension SET extname = 'vector' WHERE extname = 'pgvector';
+```
+
+(Requires the `vector.control` file to be installed on the server.)
+
 You can also install it with [Docker](#docker), [Homebrew](#homebrew), [PGXN](#pgxn), [APT](#apt), [Yum](#yum), [pkg](#pkg), or [conda-forge](#conda-forge), and it comes preinstalled with [Postgres.app](#postgresapp) and many [hosted providers](#hosted-postgres). There are also instructions for [GitHub Actions](https://github.com/pgvector/setup-pgvector).
 
 ### Windows
