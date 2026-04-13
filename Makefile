@@ -3,7 +3,11 @@ EXTENSION = vector pgvector
 EXTVERSION = 0.8.2
 EXTENSION_BUILD = vector
 
-MODULE_big = vector
+# Build as pgvector.so so that existing clusters (probin = '$libdir/pgvector')
+# continue to work without any catalog changes after package upgrade.
+# vector.so is installed as a symlink -> pgvector.so for new installations
+# that go through vector.control (module_pathname = '$libdir/vector').
+MODULE_big = pgvector
 DATA = $(wildcard sql/*--*--*.sql)
 DATA_built = sql/$(EXTENSION_BUILD)--$(EXTVERSION).sql sql/pgvector--$(EXTVERSION).sql
 OBJS = src/bitutils.o src/bitvec.o src/halfutils.o src/halfvec.o src/hnsw.o src/hnswbuild.o src/hnswinsert.o src/hnswscan.o src/hnswutils.o src/hnswvacuum.o src/ivfbuild.o src/ivfflat.o src/ivfinsert.o src/ivfkmeans.o src/ivfscan.o src/ivfutils.o src/ivfvacuum.o src/sparsevec.o src/vector.o
@@ -66,6 +70,13 @@ sql/pgvector--$(EXTVERSION).sql: sql/$(EXTENSION_BUILD)--$(EXTVERSION).sql
 PG_CONFIG ?= pg_config
 PGXS := $(shell $(PG_CONFIG) --pgxs)
 include $(PGXS)
+
+# Install vector$(DLSUFFIX) -> pgvector$(DLSUFFIX) symlink so that new
+# installations via vector.control (module_pathname = '$libdir/vector') work.
+install: install-vector-lib-symlink
+.PHONY: install-vector-lib-symlink
+install-vector-lib-symlink:
+	ln -sf pgvector$(DLSUFFIX) '$(DESTDIR)$(pkglibdir)/vector$(DLSUFFIX)'
 
 # for Mac
 ifeq ($(PROVE),)
