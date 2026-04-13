@@ -3,6 +3,7 @@
 /results/
 /tmp_check/
 /sql/vector--?.?.?.sql
+/sql/pgvector--?.?.?.sql
 regression.*
 *.o
 *.so
